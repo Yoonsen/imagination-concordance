@@ -18,14 +18,26 @@ export default function App() {
   useEffect(() => {
     const fetchCorpus = async () => {
       try {
-        const res = await fetch(`${import.meta.env.BASE_URL}corpus.json?v=${Date.now()}`);
+        // Log the base URL for debugging
+        console.log('Base URL:', import.meta.env.BASE_URL);
+        
+        // Use the correct path for GitHub Pages
+        const corpusUrl = `${import.meta.env.BASE_URL || '/'}corpus.json?v=${Date.now()}`;
+        console.log('Fetching corpus from:', corpusUrl);
+        
+        const res = await fetch(corpusUrl);
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
         const data = await res.json();
+        console.log('Corpus data loaded:', data);
+        
         const meta = data.dhlabids || [];
         setMetadata(meta);
         setStatus(`Loaded metadata for ${meta.length} documents.`);
       } catch (err) {
-        setStatus("Error loading corpus.");
-        console.error(err);
+        console.error('Error loading corpus:', err);
+        setStatus(`Error loading corpus: ${err.message}`);
       }
     };
     fetchCorpus();

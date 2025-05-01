@@ -4,12 +4,12 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/imagination-concordance/',
+  base: process.env.NODE_ENV === 'production' ? '/imagination-concordance/' : '/',
   plugins: [
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['icon-192.png', 'icon-512.png'],
+      includeAssets: ['icon-192.png', 'icon-512.png', 'corpus.json'],
       manifest: {
         name: 'Imagination Concordance',
         short_name: 'Concordance',
