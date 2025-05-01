@@ -18,7 +18,7 @@ export default function App() {
   useEffect(() => {
     const fetchCorpus = async () => {
       try {
-        const res = await fetch(`/corpus.json?v=${Date.now()}`);
+        const res = await fetch(`${import.meta.env.BASE_URL}corpus.json?v=${Date.now()}`);
         const data = await res.json();
         const meta = data.dhlabids || [];
         setMetadata(meta);
